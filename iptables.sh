@@ -1,4 +1,6 @@
 #!/bin/sh
+# Start iptables-services
+sudo systemctl start iptables
 
 # Clear all rules
 sudo iptables -t filter -F
@@ -22,6 +24,10 @@ sudo iptables -t filter -A OUTPUT -p icmp -j ACCEPT
 # Authorize SSH
 sudo iptables -t filter -A INPUT -p tcp --dport 22 -j ACCEPT
 sudo iptables -t filter -A OUTPUT -p tcp --dport 22 -j ACCEPT
+
+# Authorize Jenkins port
+sudo iptables -t filter -A INPUT -p tcp --dport 8080 -j ACCEPT
+sudo iptables -t filter -A OUTPUT -p tcp --dport 8080 -j ACCEPT
 
 # Authorize DNS
 sudo iptables -t filter -A OUTPUT -p tcp --dport 53 -j ACCEPT
